@@ -1,26 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
+const App = () => {
+  const [x, setX] = useState<number>(0);
+  const [y, setY] = useState<number>(0);
+
+  useEffect(() => {
+    const update = (e: MouseEvent) => {
+      setX(e.x);
+      setY(e.y)
+    };
+    window.addEventListener('mousemove', update);
+    return () => window.removeEventListener('mousemove', update);
+  }, [setX, setY]);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <div className="App-logo-container">
+          <p className="App-North">N</p>
+          <img src={logo} className="App-logo" alt="logo" />
+        </div>
+        <p>x: {x} - y: {y}</p>
       </header>
     </div>
   );
-}
+};
 
 export default App;
