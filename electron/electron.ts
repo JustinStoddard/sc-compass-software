@@ -10,6 +10,8 @@ const createWindow = () => {
   let window: BrowserWindow | null = new BrowserWindow({
     width: 800,
     height: 600,
+    transparent: true,
+    frame: false,
     webPreferences: {
       nodeIntegration: true,
       preload: path.join(__dirname, "preload.js")

@@ -24,31 +24,35 @@ const App = () => {
   }, [mouseX, constraint]);
 
   return (
-    <div className="App">
-      <div className='pip' />
-      <div className="App-header">
+    <div className="app">
+      <div className="app-header">
+        <div className='pip' />
         <div
           ref={compassRef}
-          className="App-logo-container"
+          className="app-logo-container"
           style={{
             transform: `rotate(${rotation}deg)`
           }}
         >
-          <img src={logo} className="App-logo" alt="logo" />
+          <img src={logo} className="app-logo" alt="logo" />
         </div>
       </div>
-      <p>Sensitivity: {constraint}</p>
-      <input
-        className='range'
-        type="range"
-        min={0.1}
-        max={30}
-        step={0.1}
-        value={constraint}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          setConstraint(e.target.valueAsNumber);
-        }}
-      />
+      <div className='sensitivity-container'>
+        <p>Sensitivity: {constraint}</p>
+      </div>
+      <div className='range-container'>
+        <input
+          className='range'
+          type="range"
+          min={0.1}
+          max={30}
+          step={0.1}
+          value={constraint}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            setConstraint(e.target.valueAsNumber);
+          }}
+        />
+      </div>
       <br />
       <button
         onClick={() => {
@@ -57,6 +61,7 @@ const App = () => {
       >
         SYNC
       </button>
+      <p className='drag'>DRAG ME</p>
     </div>
   );
 };

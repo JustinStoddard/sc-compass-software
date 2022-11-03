@@ -1,6 +1,6 @@
-.App {
+.app {
   text-align: center;
-  background-color: #F6F6F6;
+  background-color: transparent;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -19,27 +19,43 @@
 
 .range {
   width: 200px;
+  background: #F6F6F6;
 }
 
-.App-logo {
+.app-logo {
   width: 500px;
   height: 500px;
 }
 
-.App-header {
+.app-header {
   width: 400px;
   height: 130px;
+  background: #F6F6F6;
   overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: flex-start;
 }
 
-.App-logo-container {
+.app-logo-container {
   position: relative;
   display: flex;
   height: 500px;
   width: 500px;
   justify-content: center;
   align-items: center;
+}
+
+.sensitivity-container {
+  background: #F6F6F6;
+}
+
+.range-container {
+  background: #F6F6F6;
+}
+
+.drag {
+  cursor: move;
+  background: #F6F6F6;
+  -webkit-app-region: drag;
 }
