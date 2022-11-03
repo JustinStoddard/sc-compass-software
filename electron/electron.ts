@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, BrowserView } from "electron";
 import { initialize, enable as enableRemote } from "@electron/remote/main";
 import * as path from "path";
 
@@ -6,12 +6,14 @@ import * as path from "path";
 initialize();
 
 const createWindow = () => {
+
   // Create browser window.
   let window: BrowserWindow | null = new BrowserWindow({
     width: 800,
     height: 600,
     transparent: true,
     frame: false,
+    focusable: false,
     webPreferences: {
       nodeIntegration: true,
       preload: path.join(__dirname, "preload.js")
@@ -23,6 +25,14 @@ const createWindow = () => {
 
   // Load main html page
   window.loadFile(path.join(__dirname, 'index.html'));
+
+  // Forces the window to always be on top.
+  window.setAlwaysOnTop(true, "pop-up-menu");
+
+  window.setIgnoreMouseEvents(true);
+
+  // Make window the size on the screen on initialization.
+  window.maximize();
 
   // Open dev tools if we are in development mode.
   if (process.env.REACT_APP_ENV === 'development') window.webContents.openDevTools();
@@ -48,3 +58,8 @@ app.on('activate', () => {
   // On OSX it is common to re-create a window in the app when the dock icon is clicked and there are no windows open.
   if (BrowserWindow.getAllWindows().length === 0) createWindow(); 
 });
+
+// ipcMain.on('resize', (event, args) => {
+//   const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+//   window?.setSize(width, height);
+// });

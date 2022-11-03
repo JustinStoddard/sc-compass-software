@@ -10,16 +10,38 @@
   color: #282c34;
 }
 
+.pip-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  width: 400px;
+  background: #F6F6F6;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
 .pip {
+  position: absolute;
   width: 3px;
-  height: 20px;
+  height: 60px;
   border-radius: 50px;
-  background: #000 ;
+  background: #000;
+  bottom: 0px;
+  left: 200px;
+}
+
+.range-container {
+  margin-top: 5px;
+  margin-right: 5px;
+  display: flex;
+  flex-direction: column;
 }
 
 .range {
-  width: 200px;
+  width: 50px;
   background: #F6F6F6;
+  border-radius: 5px;
 }
 
 .app-logo {
@@ -35,6 +57,8 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 
 .app-logo-container {
@@ -50,11 +74,10 @@
   background: #F6F6F6;
 }
 
-.range-container {
-  background: #F6F6F6;
-}
-
 .drag {
+  margin-left: 5px;
+  width: 40px;
+  border-top-left-radius: 20px;
   cursor: move;
   background: #F6F6F6;
   -webkit-app-region: drag;

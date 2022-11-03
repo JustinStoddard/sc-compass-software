@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import logo from './722-7221067_360-compass-png-png-download-360-degree-compass.png';
+import compass from './722-7221067_360-compass-png-png-download-360-degree-compass.png';
+import drag from './581820-200.png';
 import './App.css';
 
 const App = () => {
   const compassRef = useRef<HTMLDivElement>(null);
   const [mouseX, setX] = useState<number>(0);
   const [rotation, setRotation] = useState<number>(0);
-  const [constraint, setConstraint] = useState<number>(20);
+  const [constraint, setConstraint] = useState<number>(15);
 
   useEffect(() => {
     const update = (e: MouseEvent) => {
@@ -25,8 +26,35 @@ const App = () => {
 
   return (
     <div className="app">
-      <div className="app-header">
+      <div className='pip-container'>
+        <img src={drag} className='drag' alt='drag' />
         <div className='pip' />
+        <div className='range-container'>
+          <input
+            className='range'
+            type="number"
+            value={constraint}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setConstraint(e.target.valueAsNumber);
+            }}
+          />
+          <button
+            onClick={() => {
+              setRotation(0);
+            }}
+          >
+            SYNC
+          </button>
+          <button
+            onClick={() => {
+
+            }}
+          >
+            RE-SIZE
+          </button>
+        </div>
+      </div>
+      <div className="app-header">
         <div
           ref={compassRef}
           className="app-logo-container"
@@ -34,34 +62,9 @@ const App = () => {
             transform: `rotate(${rotation}deg)`
           }}
         >
-          <img src={logo} className="app-logo" alt="logo" />
+          <img src={compass} className="app-logo" alt="compass" />
         </div>
       </div>
-      <div className='sensitivity-container'>
-        <p>Sensitivity: {constraint}</p>
-      </div>
-      <div className='range-container'>
-        <input
-          className='range'
-          type="range"
-          min={0.1}
-          max={30}
-          step={0.1}
-          value={constraint}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setConstraint(e.target.valueAsNumber);
-          }}
-        />
-      </div>
-      <br />
-      <button
-        onClick={() => {
-          setRotation(0);
-        }}
-      >
-        SYNC
-      </button>
-      <p className='drag'>DRAG ME</p>
     </div>
   );
 };
