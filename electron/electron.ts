@@ -29,6 +29,11 @@ const createWindow = () => {
   // Forces the window to always be on top.
   window.setAlwaysOnTop(true, "pop-up-menu");
 
+  // Allows mouse events through window
+  window.setIgnoreMouseEvents(true, {
+    forward: true,
+  });
+
   // Make window the size on the screen on initialization.
   window.maximize();
 
@@ -39,13 +44,27 @@ const createWindow = () => {
     // Dereference the window object, usually you would store windows in an array if your browser supports multi windows, this is the time when you should delete the corresponding element.
     window = null;
   });
-
-  ipcMain.on('resize', (event, args) => {
-    const webContents = event.sender;
-    const window = BrowserWindow.fromWebContents(webContents);
-    window.resize();
-  });
 };
+
+ipcMain.on('resize', (event, args) => {
+  const webContents = event.sender;
+  const window = BrowserWindow.fromWebContents(webContents);
+  window.maximize();
+});
+
+ipcMain.on('compass-enter', (event, args) => {
+  const webContents = event.sender;
+  const window = BrowserWindow.fromWebContents(webContents);
+  window.setIgnoreMouseEvents(false);
+});
+
+ipcMain.on('compass-leave', (event, args) => {
+  const webContents = event.sender;
+  const window = BrowserWindow.fromWebContents(webContents);
+  window.setIgnoreMouseEvents(true, {
+    forward: true,
+  });
+});
 
 // When app is ready create the browser window.
 app.on('ready', createWindow);

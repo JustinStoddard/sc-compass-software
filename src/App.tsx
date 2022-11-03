@@ -1,8 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { IpcRenderer } from 'electron';
 import compass from './722-7221067_360-compass-png-png-download-360-degree-compass.png';
 import drag from './581820-200.png';
 import './App.css';
-const { ipcRenderer } = window.require('electron'); 
+
+
+declare global {
+  interface Window {
+    ipcRenderer: IpcRenderer
+  }
+}
 
 const App = () => {
   const compassRef = useRef<HTMLDivElement>(null);
@@ -11,7 +18,15 @@ const App = () => {
   const [constraint, setConstraint] = useState<number>(15);
 
   const resize = () => {
-    window.electronAPI.resize();
+    window.ipcRenderer.send('resize');
+  };
+
+  const handleCompassEnter = () => {
+    window.ipcRenderer.send('compass-enter');
+  };
+
+  const handleCompassLeave = () => {
+    window.ipcRenderer.send('compass-leave');
   };
 
   useEffect(() => {
@@ -27,11 +42,17 @@ const App = () => {
     const compassX = compassRect?.x !== undefined ? compassRect?.x : 0;
     const compassWidth = compassRect?.width !== undefined ? compassRect?.width : 0;
     setRotation((mouseX - compassX - (compassWidth / 2)) / constraint);
+    if (mouseX === 0) setX(compassWidth);
+    if (mouseX === compassWidth) setX(0);
   }, [mouseX, constraint]);
 
   return (
     <div className="app">
-      <div className='pip-container'>
+      <div
+        className='pip-container'
+        onMouseEnter={() => handleCompassEnter()}
+        onMouseLeave={() => handleCompassLeave()}
+      >
         <img src={drag} className='drag' alt='drag' />
         <div className='pip' />
         <div className='range-container'>
