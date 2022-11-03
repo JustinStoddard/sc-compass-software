@@ -1,5 +1,5 @@
-window.addEventListener('DOMContentLoaded', () => {
-  // Do stuff...
-});
+const { contextBridge, ipcRenderer } = require('electron')
 
-export {}
+contextBridge.exposeInMainWorld('electronAPI', {
+  resize: () => ipcRenderer.send('resize', 'resize'),
+});

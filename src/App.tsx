@@ -2,12 +2,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import compass from './722-7221067_360-compass-png-png-download-360-degree-compass.png';
 import drag from './581820-200.png';
 import './App.css';
+const { ipcRenderer } = window.require('electron'); 
 
 const App = () => {
   const compassRef = useRef<HTMLDivElement>(null);
   const [mouseX, setX] = useState<number>(0);
   const [rotation, setRotation] = useState<number>(0);
   const [constraint, setConstraint] = useState<number>(15);
+
+  const resize = () => {
+    window.electronAPI.resize();
+  };
 
   useEffect(() => {
     const update = (e: MouseEvent) => {
@@ -38,20 +43,8 @@ const App = () => {
               setConstraint(e.target.valueAsNumber);
             }}
           />
-          <button
-            onClick={() => {
-              setRotation(0);
-            }}
-          >
-            SYNC
-          </button>
-          <button
-            onClick={() => {
-
-            }}
-          >
-            RE-SIZE
-          </button>
+          <button onClick={() => setRotation(0)}>SYNC</button>
+          <button onClick={() => resize()}>RE-SIZE</button>
         </div>
       </div>
       <div className="app-header">

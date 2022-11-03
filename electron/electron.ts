@@ -1,4 +1,4 @@
-import { app, BrowserWindow, BrowserView } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import { initialize, enable as enableRemote } from "@electron/remote/main";
 import * as path from "path";
 
@@ -29,8 +29,6 @@ const createWindow = () => {
   // Forces the window to always be on top.
   window.setAlwaysOnTop(true, "pop-up-menu");
 
-  window.setIgnoreMouseEvents(true);
-
   // Make window the size on the screen on initialization.
   window.maximize();
 
@@ -40,6 +38,12 @@ const createWindow = () => {
   window.on('closed', () => {
     // Dereference the window object, usually you would store windows in an array if your browser supports multi windows, this is the time when you should delete the corresponding element.
     window = null;
+  });
+
+  ipcMain.on('resize', (event, args) => {
+    const webContents = event.sender;
+    const window = BrowserWindow.fromWebContents(webContents);
+    window.resize();
   });
 };
 
@@ -58,8 +62,3 @@ app.on('activate', () => {
   // On OSX it is common to re-create a window in the app when the dock icon is clicked and there are no windows open.
   if (BrowserWindow.getAllWindows().length === 0) createWindow(); 
 });
-
-// ipcMain.on('resize', (event, args) => {
-//   const { width, height } = screen.getPrimaryDisplay().workAreaSize;
-//   window?.setSize(width, height);
-// });

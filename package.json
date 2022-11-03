@@ -20,10 +20,11 @@
     "typescript": "^4.8.4",
     "web-vitals": "^2.1.4"
   },
+  "homepage": "./",
   "scripts": {
     "web:start": "react-scripts start",
-    "web:build": "PUBLIC_URL=./ react-scripts build",
-    "electron:build": "PUBLIC_URL=./ react-scripts build && tsc -p electron/tsconfig.json",
+    "web:build": " react-scripts build",
+    "electron:build": " react-scripts build && tsc -p electron/tsconfig.json",
     "electron:start": "npm run electron:build && electron ./build/electron.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
