@@ -4,7 +4,6 @@ import compass from './722-7221067_360-compass-png-png-download-360-degree-compa
 import drag from './581820-200.png';
 import './App.css';
 
-
 declare global {
   interface Window {
     ipcRenderer: IpcRenderer
@@ -42,8 +41,6 @@ const App = () => {
     const compassX = compassRect?.x !== undefined ? compassRect?.x : 0;
     const compassWidth = compassRect?.width !== undefined ? compassRect?.width : 0;
     setRotation((mouseX - compassX - (compassWidth / 2)) / constraint);
-    if (mouseX === 0) setX(compassWidth);
-    if (mouseX === compassWidth) setX(0);
   }, [mouseX, constraint]);
 
   return (

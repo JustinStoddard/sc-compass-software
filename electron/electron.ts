@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow, ipcMain, screen } from "electron";
 import { initialize, enable as enableRemote } from "@electron/remote/main";
 import * as path from "path";
 
@@ -64,6 +64,17 @@ ipcMain.on('compass-leave', (event, args) => {
   window.setIgnoreMouseEvents(true, {
     forward: true,
   });
+});
+
+ipcMain.on('init', (event, args) => {
+  const webContents = event.sender;
+  const window = BrowserWindow.fromWebContents(webContents);
+  const { bounds } = screen.getPrimaryDisplay();
+  const dimensions = {
+    width: bounds.width,
+    height: bounds.height,
+  };
+  window.webContents.send('init', dimensions);
 });
 
 // When app is ready create the browser window.
